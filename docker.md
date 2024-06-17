@@ -12,7 +12,7 @@
 `docker run -dp 8868:8866 -v /root/data/:/PaddleOCR/share/ -e TZ="Asia/Shanghai" --name ppocr paddleocr:2.0 `
 
 ###### dockerfile中添加cmd命令
-`/bin/bash -c "hub install deploy/hubserving/ocr_system/ && hub install deploy/hubserving/ocr_rec/ && hub serving start -c deploy/hubserving/ocr_system/config.json > share/log/`date +'%Y-%m-%d'`.log"`
+`/bin/bash -c "hub install deploy/hubserving/ocr_system/ && hub install deploy/hubserving/ocr_rec/ && hub serving start -c deploy/hubserving/ocr_system/config.json"`
 
 
 ### 镜像导入导出
@@ -24,3 +24,29 @@
 
 ###### 重新打 tag
 `docker tag id xxx:tag`
+
+
+### 其它命令
+##### 重启docker和容器
+* 重启docker服务：`systemctl restart docker`
+* 重启容器： `docker start containers_id`
+
+##### 日志
+`docker logs -f 容器id`
+> 执行此命令，会进入控制台等待日志输出，如果日志很长会刷屏很久。
+
+`docker logs --tail 0 -f 容器id`
+> 执行此命令，会进入控制台等待日志输出，不会加载之前的日志。
+
+### 修改已停止容器内的文件
+1. 将容器中的文件拷贝到宿主机
+```
+docker cp 容器id:容器内文件路径 宿主机路径
+```
+
+2. 修改拷贝出来的文件，再将文件拷贝回容器
+```
+docker cp 宿主机路径 容器id:容器内文件路径 
+```
+
+3. 重新启动容器即可

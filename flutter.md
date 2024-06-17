@@ -24,6 +24,54 @@ futter clean 清除缓存
 flutter create 创建一个flutter 新项目
 ```
 
+### 版本管理fvm
+* 如何安装
+```
+# 安装
+brew tap leoafarias/fvm
+brew install fvm
+# 卸载
+brew uninstall fvm
+brew untap leoafarias/fvm
+```
+
+* 如何使用
+```
+# 查看现有远程版本
+fvm releases
+
+# 安装flutter版本
+fvm install 3.7.10
+
+# 卸载flutter版本
+fvm remove 3.7.10
+
+# 查看本地已装的版本
+fvm list installed versions
+
+# 在程序根目录设置flutter版本
+fvm use 3.7.10
+
+# 设置全局版本
+fvm global 3.7.10
+
+# 项目目录下执行，可获取当前的使用版本
+fvm list
+
+# 在当前项目目录下执行，可获取当前项目的flutter版本
+fvm flutter --version
+
+# 在当前项目目录下执行，清理项目缓存
+fvm flutter clean
+
+# 在当前项目目录下执行，获取依赖包
+fvm flutter pub get
+
+# 在当前项目目录下执行，项目运营
+fvm flutter run
+
+```
+
 ### 打包deb
 * 编译，生成的目录在 build/linux/x86/release/bundle
 `flutter build linux --release`
