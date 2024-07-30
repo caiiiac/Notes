@@ -1,6 +1,6 @@
 ### 使用docker commit命令创建新镜像
 ① 停止容器服务 `docker stop tomcat8(容器名)`
-② 构建新镜像  `docker commit tomcat8 tomcat8_new(镜像名)`
+② 构建新镜像  `docker commit 容器ID tomcat8_new:tag(镜像名:tag)`
 ③ 使用新镜像重新创建容器  `docker run -d -p 8888:8080 -i --name tomcat88 tomcat8_new(:tag)`
 ④ 删除原有容器 `docker rm tomcat8`
 ⑤ 修改容器名称 `docker rename tomcat88 tomcat8`
@@ -8,8 +8,14 @@
 ### 生成镜像
 `docker build -t paddleocr:cpu .`
 
+### 启动容器参数
+* -v: 挂载服务器目录至 docker 容器
+* -e: 设置容器的时区
+* /bin/bash -c: 可以替换 cmd 的启动命令
+* --restart=always: 保证每次docker服务重启后容器也自动重启
+* 
 ###### 挂载目录+时区
-`docker run -dp 8868:8866 -v /root/data/:/PaddleOCR/share/ -e TZ="Asia/Shanghai" --name ppocr paddleocr:2.0 `
+`docker run -dp 8868:8866 -v /web/webfile/UploadFile/:/UploadFile/ -e TZ="Asia/Shanghai" --name ppocr paddleocr:v2.3`
 
 ###### dockerfile中添加cmd命令
 `/bin/bash -c "hub install deploy/hubserving/ocr_system/ && hub install deploy/hubserving/ocr_rec/ && hub serving start -c deploy/hubserving/ocr_system/config.json"`
@@ -17,7 +23,8 @@
 
 ### 镜像导入导出
 ###### 导出
-`docker save id > /opt/xxx.tar`
+`docker save 镜像id > /opt/xxx.tar`
+`docker export 容器id > /opt/xxx.tar`
 
 ###### 导入
 `docker load < xxx.tar`
@@ -29,7 +36,7 @@
 ### 其它命令
 ##### 重启docker和容器
 * 重启docker服务：`systemctl restart docker`
-* 重启容器： `docker start containers_id`
+* 重启容器： `docker restart containers_id`
 
 ##### 日志
 `docker logs -f 容器id`
